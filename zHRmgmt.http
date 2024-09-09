@@ -1,8 +1,26 @@
-GET http://localhost:4004/odata/v2/Employee
+GET http://localhost:4004/v2/odata/EMPLOYEE
 # Accept: application/json
 
 ###
-POST http://localhost:4004/odata/v2/EMPLOYEES
+DELETE http://localhost:4004/v2/odata/EMPLOYEE(EMP_ID=1)
+
+
+###
+POST http://localhost:4004/v2/odata/EMPLOYEE
+Content-Type: application/json
+
+{
+    "EMP_ID"         : 4,
+    "EMP_NAME"       : "Kurvesh Patel",
+    "EMP_AGE"        : "23",
+    "EMP_MODULE_MODULE_ID"     : "",
+    "EMP_IMG"    : "",
+    "EMP_IMG_URL" : ""
+}
+
+
+###
+POST http://localhost:4004/v2/odata/Employee
 Content-Type: multipart/form-data; boundary=---011000010111000001101001
 Accept: application/json
 
