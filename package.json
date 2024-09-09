@@ -6,17 +6,28 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@cap-js/hana": "^1",
-    "@sap/cds": "^8",
+    "@sap/cds": "^7",
     "@sap/cds-odata-v2-adapter-proxy": "^1.9.21",
-    "express": "^4"
+    "express": "^4",
+    "@cap-js/hana": "1.1.0"
   },
   "devDependencies": {
-    "@cap-js/cds-types": "^0.6",
+    "@cap-js/cds-types": "^0.2.0",
     "@cap-js/sqlite": "^1",
-    "@sap/cds-dk": "^8"
+    "@sap/cds-dk": "^7"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "watch":"cds watch --profile hybrid",
+    "deploy": "cf deploy mta_archives/zHRmgmt__oData_1.0.0.mtar",
+    "login": "cf login --sso",
+    "hanaon": "cf update-service KURVESH -c '{\"data\":{\"serviceStopped\":false}}'",
+    "hanaoff": "cf update-service KURVESH -c '{\"data\":{\"serviceStopped\":true}}'"
+  },
+  "cds": {
+    "requires": {
+      "auth": "dummy",
+      "db": "hana"
+    }
   }
 }
