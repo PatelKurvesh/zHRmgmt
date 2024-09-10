@@ -1,7 +1,7 @@
 const cds = require("@sap/cds");
 
 module.exports = (srv => {
-    let {EMPLOYEE, MODULE, FILE} = srv.entities;
+    let {EMPLOYEE, Module, FILE} = srv.entities;
 
     srv.before("CREATE", EMPLOYEE, async (req) => {
         let db = await cds.connect.to('db');
@@ -26,23 +26,45 @@ module.exports = (srv => {
         res.send(oEmployeeObj)
     });
 
+    // srv.on("readModule", async (req) => {
+    //     let db = await cds.connect.to('db');
+    //     let tx = db.tx(req);
+    //     try {
+    //         var sQuery = `SELECT MODULE_ID,MODULE_NAME,MODULE_CODE FROM ${MODULE} WHERE MODULE_TYPE=${
+    //             req.data.MODULE_TYPE
+    //         }`;
+    //         var aModule = await tx.run(sQuery);
+    //         var oModuleObj = {
+    //             "Developed By": "Kurvesh Patel",
+    //             "status": 200,
+    //             "results": aModule
+    //         };
+    //         const {req} = req.http;
+    //         res.send(oModuleObj);
+    //     } catch (error) {
+    //         req.reject(404, error);
+    //     }
+    // });
+
     srv.on("readModule", async (req) => {
         let db = await cds.connect.to('db');
-        let tx = db.tx(req);
+        let tx = db.tx();
+        let sModuleType = req.data.MODULE_TYPE;
         try {
-            var sQuery = `SELECT MODULE_ID,MODULE_NAME,MODULE_CODE FROM ${MODULE} WHERE MODULE_TYPE=${
-                req.data.MODULE_TYPE
-            }`;
+            var sQuery = `SELECT MODULE_ID,MODULE_NAME,MODULE_CODE FROM ${Module} WHERE MODULE_TYPE = '${sModuleType}'`;
             var aModule = await tx.run(sQuery);
+            // var aModule = await tx.run(SELECT.from(Module).where(`MODULE_TYPE='${sModuleType}'`));
             var oModuleObj = {
                 "Developed By": "Kurvesh Patel",
                 "status": 200,
                 "results": aModule
             };
-            const {req} = req.http;
+            const {res} = req.http;
             res.send(oModuleObj);
         } catch (error) {
-            req.reject(404, error);
+            console.log(error);
         }
     });
-})
+
+
+});

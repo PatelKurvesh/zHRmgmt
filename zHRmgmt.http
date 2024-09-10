@@ -20,4 +20,8 @@ Content-Type: application/json
 
 
 ###
+GET http://localhost:4004/odata/readModule(MODULE_TYPE='Technical')
 
+
+###
+GET http://localhost:4004/odata/Module
