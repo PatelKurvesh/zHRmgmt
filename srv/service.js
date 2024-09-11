@@ -26,25 +26,6 @@ module.exports = (srv => {
         res.send(oEmployeeObj)
     });
 
-    // srv.on("readModule", async (req) => {
-    //     let db = await cds.connect.to('db');
-    //     let tx = db.tx(req);
-    //     try {
-    //         var sQuery = `SELECT MODULE_ID,MODULE_NAME,MODULE_CODE FROM ${MODULE} WHERE MODULE_TYPE=${
-    //             req.data.MODULE_TYPE
-    //         }`;
-    //         var aModule = await tx.run(sQuery);
-    //         var oModuleObj = {
-    //             "Developed By": "Kurvesh Patel",
-    //             "status": 200,
-    //             "results": aModule
-    //         };
-    //         const {req} = req.http;
-    //         res.send(oModuleObj);
-    //     } catch (error) {
-    //         req.reject(404, error);
-    //     }
-    // });
 
     srv.on("readModule", async (req) => {
         let db = await cds.connect.to('db');
