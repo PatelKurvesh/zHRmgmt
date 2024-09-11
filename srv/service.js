@@ -26,6 +26,14 @@ module.exports = (srv => {
         res.send(oEmployeeObj)
     });
 
+    srv.on("UPDATE", "EMPLOYEE", async (req) => {
+        const { Image } = req.data;
+        if (Image) {
+          const tx = cds.transaction(req);
+          await tx.run(UPDATE(EMPLOYEE).set({ Image: Image }).where({ ID: req.data.ID }));
+        }
+      });
+
 
     srv.on("readModule", async (req) => {
         let db = await cds.connect.to('db');
