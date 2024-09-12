@@ -27,7 +27,7 @@ entity CV{
 }
 
 entity MODULE{
-    key MODULE_ID:String;
+    key MODULE_ID:Int32;
     MODULE_NAME:String;
     MODULE_CODE:String;
     MODULE_TYPE:String;

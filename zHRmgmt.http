@@ -20,8 +20,22 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:4004/odata/readModule(MODULE_TYPE='Technical')
+GET http://localhost:4004/v2/odata/readModule(MODULE_TYPE='Technical')
 
 
 ###
-GET http://localhost:4004/odata/Module
+GET http://localhost:4004/v2/odata/MODULE
+
+###
+POST http://localhost:4004/v2/odata/MODULE
+Content-Type: application/json
+
+{
+    "MODULE_ID":3,
+    "MODULE_NAME":"SAP Quality Management",
+    "MODULE_CODE":"QM",
+    "MODULE_TYPE":"Technical"
+}
+
+###
+DELETE  http://localhost:4004/v2/odata/MODULE(MODULE_ID=61)

@@ -1,7 +1,7 @@
 const cds = require("@sap/cds");
 
 module.exports = (srv => {
-    let {EMPLOYEE, Module, FILE} = srv.entities;
+    let {EMPLOYEE, MODULE, FILE} = srv.entities;
 
     srv.before("CREATE", EMPLOYEE, async (req) => {
         let db = await cds.connect.to('db');
@@ -32,15 +32,14 @@ module.exports = (srv => {
           const tx = cds.transaction(req);
           await tx.run(UPDATE(EMPLOYEE).set({ Image: Image }).where({ ID: req.data.ID }));
         }
-      });
-
+    });
 
     srv.on("readModule", async (req) => {
         let db = await cds.connect.to('db');
         let tx = db.tx();
         let sModuleType = req.data.MODULE_TYPE;
         try {
-            var sQuery = `SELECT MODULE_ID,MODULE_NAME,MODULE_CODE FROM ${Module} WHERE MODULE_TYPE = '${sModuleType}'`;
+            var sQuery = `SELECT MODULE_ID,MODULE_NAME,MODULE_CODE FROM ${MODULE} WHERE MODULE_TYPE = '${sModuleType}'`;
             var aModule = await tx.run(sQuery);
             // var aModule = await tx.run(SELECT.from(Module).where(`MODULE_TYPE='${sModuleType}'`));
             var oModuleObj = {
@@ -54,6 +53,21 @@ module.exports = (srv => {
             console.log(error);
         }
     });
+
+    srv.before("CREATE", MODULE, async (req) => {
+        let db = await cds.connect.to('db');
+        let tx = db.tx(req);
+        try {
+            let sQuery = `SELECT MAX(MODULE_ID) AS COUNT FROM ${MODULE}`;
+            let employeeTable = await tx.run(sQuery);
+            employeeTable[0].COUNT = employeeTable[0].COUNT + 1;
+            req.data.MODULE_ID = employeeTable[0].COUNT;
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    
 
 
 });
