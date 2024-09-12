@@ -8,7 +8,7 @@ entity EMPLOYEE : managed {
         EMP_AGE:String;
         EMP_MODULE:Association to one MODULE;
         EMP_IMG:LargeBinary @Core.MediaType: 'image/png';
-        EMP_IMG_URL : String;
+        IMG_URL : LargeString;
         EMP_CV: Association to one CV
                 on EMP_CV.EMP = $self;
 }
