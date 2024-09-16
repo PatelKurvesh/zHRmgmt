@@ -39,3 +39,16 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:4004/v2/odata/MODULE(MODULE_ID=61)
+
+###
+POST http://localhost:4004/v2/odata/CV
+filename:Bhavesh_2023.pdf
+Content-Type: application/pdf
+
+<./Bhavesh_2023.pdf>
+
+###
+GET http://localhost:4004/v2/odata/CV
+
+###
+DELETE  http://localhost:4004/v2/odata/CV(CV_ID=fd1ebf28-04fd-4cfd-b0f0-7fc3a2d38dd3)

@@ -1,7 +1,8 @@
 const cds = require("@sap/cds");
+const fs = require('fs');
 
 module.exports = (srv => {
-    let {EMPLOYEE, MODULE, FILE} = srv.entities;
+    let {EMPLOYEE, MODULE, CV} = srv.entities;
 
     srv.before("CREATE", EMPLOYEE, async (req) => {
         let db = await cds.connect.to('db');
@@ -27,10 +28,10 @@ module.exports = (srv => {
     });
 
     srv.on("UPDATE", "EMPLOYEE", async (req) => {
-        const { Image } = req.data;
+        const {Image} = req.data;
         if (Image) {
-          const tx = cds.transaction(req);
-          await tx.run(UPDATE(EMPLOYEE).set({ Image: Image }).where({ ID: req.data.ID }));
+            const tx = cds.transaction(req);
+            await tx.run(UPDATE(EMPLOYEE).set({Image: Image}).where({ID: req.data.ID}));
         }
     });
 
@@ -67,7 +68,15 @@ module.exports = (srv => {
         }
     });
 
-    
+    srv.before("CREATE", CV, async (req) => {
+        var sCvId = req.data.CV_ID;
+        var sVersion = req.req.headers['x-cds-odata-version'];
+        if (sVersion === "v2") {
+            req.data.URL = `/v2/odata/CV(${sCvId})/CONTENT`;
+        } else {
+            req.data.URL = `/odata/CV(${sCvId})/CONTENT`;
+        }
+    });   
 
 
 });
