@@ -41,14 +41,22 @@ Content-Type: application/json
 DELETE  http://localhost:4004/v2/odata/MODULE(MODULE_ID=61)
 
 ###
-POST http://localhost:4004/v2/odata/CV
-filename:Bhavesh_2023.pdf
-Content-Type: application/pdf
+POST http://localhost:4004/v2/odata/PROJECT
+Content-Type: application/json
 
-<./Bhavesh_2023.pdf>
+{
+    
+    "PRJ_NAME":"Cargil",
+    "PRJ_BUDGET":"10000000",
+    "EMP_EMP_ID":1
+}
 
 ###
-GET http://localhost:4004/v2/odata/CV
+GET http://localhost:4004/v2/odata/PROJECT
+
+###
+
+GET http://localhost:4004/v2/odata/EMPLOYEE(1)?$expand=EMP_PRJ
 
 ###
 DELETE  http://localhost:4004/v2/odata/CV(CV_ID=fd1ebf28-04fd-4cfd-b0f0-7fc3a2d38dd3)
