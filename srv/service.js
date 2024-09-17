@@ -2,7 +2,7 @@ const cds = require("@sap/cds");
 const fs = require('fs');
 
 module.exports = (srv => {
-    let {EMPLOYEE, MODULE, CV} = srv.entities;
+    let {EMPLOYEE, MODULE, CV, PROJECT} = srv.entities;
 
     srv.before("CREATE", EMPLOYEE, async (req) => {
         let db = await cds.connect.to('db');
@@ -76,7 +76,20 @@ module.exports = (srv => {
         } else {
             req.data.URL = `/odata/CV(${sCvId})/CONTENT`;
         }
-    });   
+    });
+    
+    srv.before("CREATE", PROJECT, async (req) => {
+        let db = await cds.connect.to('db');
+        let tx = db.tx(req);
+        try {
+            let sQuery = `SELECT MAX(PRJ_ID) AS COUNT FROM ${PROJECT}`;
+            let projectTable = await tx.run(sQuery);
+            projectTable[0].COUNT = projectTable[0].COUNT + 1;
+            req.data.PRJ_ID = projectTable[0].COUNT;
+        } catch (error) {
+            console.log(error);
+        }
+    });
 
 
 });

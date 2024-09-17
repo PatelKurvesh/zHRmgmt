@@ -36,7 +36,7 @@ entity MODULE {
 }
 
 entity PROJECT {
-    key PRJ_ID     : UUID;
+    key PRJ_ID     : Int32;
         PRJ_NAME  : String;
         PRJ_BUDGET : String;
         EMP       : Association to one EMPLOYEE;

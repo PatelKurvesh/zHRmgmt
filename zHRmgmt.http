@@ -45,9 +45,9 @@ POST http://localhost:4004/v2/odata/PROJECT
 Content-Type: application/json
 
 {
-    
+    "PRJ_ID":2,
     "PRJ_NAME":"Cargil",
-    "PRJ_BUDGET":"10000000",
+    "PRJ_BUDGET":"1000000000",
     "EMP_EMP_ID":1
 }
 
@@ -59,4 +59,4 @@ GET http://localhost:4004/v2/odata/PROJECT
 GET http://localhost:4004/v2/odata/EMPLOYEE(1)?$expand=EMP_PRJ
 
 ###
-DELETE  http://localhost:4004/v2/odata/CV(CV_ID=fd1ebf28-04fd-4cfd-b0f0-7fc3a2d38dd3)
+DELETE  http://localhost:4004/v2/odata/PROJECT(PRJ_ID=5)
