@@ -17,6 +17,26 @@ module.exports = (srv => {
         }
     });
 
+
+    // For Without IMG Employee Load.
+    srv.on("READ", EMPLOYEE, async (req,next) => {
+        let db = await cds.connect.to('db');
+        let tx = db.tx(req);
+        try {
+            if (req.data.EMP_ID) {
+                await next();
+                return;
+            }
+            let aEmployee = await tx.run(SELECT.from(EMPLOYEE).columns('EMP_ID', 'EMP_NAME', 'EMP_AGE', 'EMP_MODULE', 'EMP_CV', 'EMP_PRJ'));
+            return aEmployee;
+        } catch (error) {
+            console.log(error);
+        }
+
+    });
+
+
+
     srv.before("DELETE", EMPLOYEE, async (req) => {
         let {EMP_ID} = req.data;
         let oEmployeeObj = {
@@ -77,7 +97,7 @@ module.exports = (srv => {
             req.data.URL = `/odata/CV(${sCvId})/CONTENT`;
         }
     });
-    
+
     srv.before("CREATE", PROJECT, async (req) => {
         let db = await cds.connect.to('db');
         let tx = db.tx(req);
